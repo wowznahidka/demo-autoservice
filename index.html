@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="TURBO STO — профі автосервіс у вашому місті. Діагностика, ТО, шиномонтаж, кузовний ремонт та детейлінг. Запишись онлайн через Telegram." />
+  <title>TURBO STO — Автосервіс</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── Reset & Base ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #111827;
+      --bg2:       #1a2235;
+      --bg3:       #0d1520;
+      --orange:    #f97316;
+      --orange2:   #ea6a0a;
+      --white:     #ffffff;
+      --gray:      #9ca3af;
+      --gray2:     #6b7280;
+      --border:    #2d3748;
+      --font-head: 'Oswald', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ─── Typography helpers ───────────────────────────────────────── */
+    .section-label {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 12px;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-head);
+      font-weight: 700;
+      line-height: 1.1;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      font-size: clamp(32px, 5vw, 56px);
+      letter-spacing: 0.02em;
+    }
+
+    /* ─── Layout helpers ───────────────────────────────────────────── */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section { padding: 80px 0; }
+
+    /* ─── Navbar ───────────────────────────────────────────────────── */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(17, 24, 39, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .navbar__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .navbar__logo {
+      font-family: var(--font-head);
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    .navbar__logo span { color: var(--orange); }
+
+    .navbar__nav {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .navbar__nav a {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--gray);
+      transition: color 200ms ease;
+    }
+
+    .navbar__nav a:hover { color: var(--white); cursor: pointer; }
+
+    .navbar__cta {
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--font-head);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 10px 22px;
+      border: none;
+      transition: background 200ms ease, transform 150ms ease;
+      cursor: pointer;
+    }
+
+    .navbar__cta:hover { background: var(--orange2); transform: translateY(-1px); }
+
+    /* ─── Hero ─────────────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 64px;
+      overflow: hidden;
+    }
+
+    .hero__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero__bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .hero__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        105deg,
+        rgba(17, 24, 39, 0.97) 0%,
+        rgba(17, 24, 39, 0.85) 55%,
+        rgba(17, 24, 39, 0.50) 100%
+      );
+    }
+
+    /* diagonal orange slice */
+    .hero__accent {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 6px;
+      background: var(--orange);
+      z-index: 2;
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+    }
+
+    .hero__tagline {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(249, 115, 22, 0.15);
+      border: 1px solid rgba(249, 115, 22, 0.4);
+      padding: 6px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 24px;
+    }
+
+    .hero__tagline::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: var(--orange);
+      border-radius: 50%;
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(1.3); }
+    }
+
+    .hero__title {
+      font-size: clamp(48px, 9vw, 96px);
+      letter-spacing: 0.02em;
+      margin-bottom: 8px;
+    }
+
+    .hero__title-line2 {
+      font-size: clamp(40px, 7vw, 78px);
+      color: var(--orange);
+    }
+
+    .hero__desc {
+      margin-top: 20px;
+      font-size: 17px;
+      color: var(--gray);
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
+    .hero__buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--font-head);
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 16px 32px;
+      border: 2px solid var(--orange);
+      transition: background 200ms ease, color 200ms ease, transform 150ms ease;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--orange);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      color: var(--white);
+      font-family: var(--font-head);
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 16px 32px;
+      border: 2px solid var(--border);
+      transition: border-color 200ms ease, color 200ms ease, transform 150ms ease;
+      cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+      transform: translateY(-2px);
+    }
+
+    .hero__stats {
+      display: flex;
+      gap: 48px;
+      margin-top: 52px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+
+    .hero__stat-num {
+      font-family: var(--font-head);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--orange);
+      line-height: 1;
+    }
+
+    .hero__stat-label {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-top: 4px;
+    }
+
+    /* ─── Services ─────────────────────────────────────────────────── */
+    .services { background: var(--bg3); }
+
+    .services__header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .services__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: var(--border);
+    }
+
+    .service-card {
+      background: var(--bg);
+      padding: 36px 28px;
+      border-top: 3px solid transparent;
+      transition: border-color 200ms ease, background 200ms ease, transform 200ms ease;
+      cursor: default;
+    }
+
+    .service-card:hover {
+      border-top-color: var(--orange);
+      background: var(--bg2);
+      transform: translateY(-4px);
+    }
+
+    .service-card__icon {
+      font-size: 40px;
+      margin-bottom: 16px;
+      line-height: 1;
+    }
+
+    .service-card__title {
+      font-family: var(--font-head);
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .service-card__desc {
+      font-size: 14px;
+      color: var(--gray);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .service-card__price {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .service-card__price-from {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--gray2);
+    }
+
+    .service-card__price-val {
+      font-family: var(--font-head);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--orange);
+    }
+
+    .service-card__price-cur {
+      font-size: 14px;
+      color: var(--gray);
+    }
+
+    /* ─── Why Us ───────────────────────────────────────────────────── */
+    .whyus { background: var(--bg); }
+
+    .whyus__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .whyus__img {
+      position: relative;
+    }
+
+    .whyus__img img {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    /* orange corner accent */
+    .whyus__img::before {
+      content: '';
+      position: absolute;
+      top: -12px; left: -12px;
+      width: 80px; height: 80px;
+      border-top: 4px solid var(--orange);
+      border-left: 4px solid var(--orange);
+      z-index: 1;
+    }
+
+    .whyus__img::after {
+      content: '';
+      position: absolute;
+      bottom: -12px; right: -12px;
+      width: 80px; height: 80px;
+      border-bottom: 4px solid var(--orange);
+      border-right: 4px solid var(--orange);
+    }
+
+    .whyus__text h2 { margin-bottom: 32px; }
+
+    .whyus__list {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .whyus__item {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .whyus__item-icon {
+      flex-shrink: 0;
+      width: 52px; height: 52px;
+      background: rgba(249, 115, 22, 0.12);
+      border: 1px solid rgba(249, 115, 22, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .whyus__item-title {
+      font-family: var(--font-head);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .whyus__item-desc {
+      font-size: 14px;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
+    /* ─── Gallery strip ────────────────────────────────────────────── */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      height: 260px;
+      overflow: hidden;
+    }
+
+    .gallery__item {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .gallery__item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 400ms ease;
+    }
+
+    .gallery__item:hover img { transform: scale(1.06); }
+
+    .gallery__item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(17,24,39,0.3);
+      transition: opacity 300ms ease;
+    }
+
+    .gallery__item:hover::after { opacity: 0; }
+
+    /* ─── Hours & Map ──────────────────────────────────────────────── */
+    .hours-map { background: var(--bg2); }
+
+    .hours-map__inner {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .hours__title {
+      font-family: var(--font-head);
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .hours__table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .hours__table tr {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hours__table td {
+      padding: 14px 0;
+      font-size: 15px;
+      color: var(--gray);
+    }
+
+    .hours__table td:last-child {
+      text-align: right;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .hours__table tr.today td {
+      color: var(--orange);
+    }
+
+    .hours__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 24px;
+      padding: 8px 16px;
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.35);
+      font-size: 13px;
+      font-weight: 600;
+      color: #4ade80;
+      letter-spacing: 0.05em;
+    }
+
+    .hours__badge::before {
+      content: '';
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: #4ade80;
+      border-radius: 50%;
+    }
+
+    .map__placeholder {
+      position: relative;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      height: 360px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      overflow: hidden;
+    }
+
+    /* fake map grid */
+    .map__placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.5;
+    }
+
+    .map__pin {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .map__pin-icon {
+      width: 56px; height: 56px;
+      background: var(--orange);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+    }
+
+    .map__pin-icon span { transform: rotate(45deg); display: block; }
+
+    .map__pin-label {
+      position: relative;
+      z-index: 1;
+      font-family: var(--font-head);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .map__pin-addr {
+      font-size: 13px;
+      color: var(--gray);
+      text-align: center;
+    }
+
+    .map__btn {
+      position: relative;
+      z-index: 1;
+      margin-top: 8px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--font-head);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 10px 24px;
+      border: none;
+      cursor: pointer;
+      transition: background 200ms ease;
+    }
+
+    .map__btn:hover { background: var(--orange2); }
+
+    /* ─── CTA Banner ───────────────────────────────────────────────── */
+    .cta-banner {
+      background: var(--orange);
+      padding: 64px 0;
+    }
+
+    .cta-banner__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+    }
+
+    .cta-banner__title {
+      font-family: var(--font-head);
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .cta-banner__sub {
+      font-size: 16px;
+      color: rgba(255,255,255,0.82);
+      margin-top: 6px;
+    }
+
+    .btn-dark {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-head);
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 16px 36px;
+      border: 2px solid var(--bg);
+      transition: background 200ms ease, color 200ms ease, border-color 200ms ease, transform 150ms ease;
+      cursor: pointer;
+    }
+
+    .btn-dark:hover {
+      background: transparent;
+      color: var(--white);
+      border-color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    /* ─── Contact ──────────────────────────────────────────────────── */
+    .contact { background: var(--bg3); }
+
+    .contact__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .contact__info h2 { margin-bottom: 24px; }
+
+    .contact__list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 8px;
+    }
+
+    .contact__item {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .contact__item-icon {
+      width: 44px; height: 44px;
+      background: rgba(249, 115, 22, 0.12);
+      border: 1px solid rgba(249, 115, 22, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .contact__item-text { font-size: 15px; color: var(--gray); line-height: 1.5; }
+    .contact__item-text strong { display: block; color: var(--white); font-weight: 600; margin-bottom: 2px; }
+
+    .contact__form {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 36px;
+    }
+
+    .contact__form h3 {
+      font-family: var(--font-head);
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 8px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 15px;
+      padding: 12px 16px;
+      outline: none;
+      transition: border-color 200ms ease;
+      appearance: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--orange);
+    }
+
+    .form-group textarea { resize: vertical; min-height: 100px; }
+
+    .form-group select { cursor: pointer; }
+
+    .form-group select option { background: var(--bg); }
+
+    .form-submit {
+      width: 100%;
+      background: var(--orange);
+      color: var(--white);
+      font-family: var(--font-head);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 16px;
+      border: 2px solid var(--orange);
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 200ms ease, color 200ms ease, transform 150ms ease;
+    }
+
+    .form-submit:hover {
+      background: transparent;
+      color: var(--orange);
+      transform: translateY(-2px);
+    }
+
+    /* ─── Footer ───────────────────────────────────────────────────── */
+    .footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 40px 0 24px;
+    }
+
+    .footer__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .footer__logo {
+      font-family: var(--font-head);
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    .footer__logo span { color: var(--orange); }
+
+    .footer__nav {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .footer__nav a {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--gray);
+      transition: color 200ms ease;
+    }
+
+    .footer__nav a:hover { color: var(--white); cursor: pointer; }
+
+    .footer__copy {
+      font-size: 13px;
+      color: var(--gray2);
+      text-align: center;
+    }
+
+    /* ─── Floating Telegram Button ─────────────────────────────────── */
+    .tg-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #2AABEE;
+      color: var(--white);
+      font-family: var(--font-head);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 14px 22px;
+      border: none;
+      box-shadow: 0 4px 24px rgba(42, 171, 238, 0.5);
+      transition: background 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+      cursor: pointer;
+    }
+
+    .tg-float:hover {
+      background: #229ed9;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(42, 171, 238, 0.65);
+    }
+
+    .tg-float__icon {
+      width: 24px; height: 24px;
+      flex-shrink: 0;
+    }
+
+    /* ─── Divider ──────────────────────────────────────────────────── */
+    .divider {
+      height: 4px;
+      background: linear-gradient(90deg, var(--orange), transparent);
+    }
+
+    /* ─── Responsive ───────────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .services__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .gallery {
+        grid-template-columns: repeat(2, 1fr);
+        height: 320px;
+      }
+
+      .whyus__inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .whyus__img img { height: 340px; }
+
+      .hours-map__inner { grid-template-columns: 1fr; }
+
+      .contact__inner { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    @media (max-width: 768px) {
+      section { padding: 56px 0; }
+
+      .navbar__nav { display: none; }
+
+      .hero__stats {
+        gap: 28px;
+        flex-wrap: wrap;
+      }
+
+      .services__grid {
+        grid-template-columns: 1fr;
+        gap: 1px;
+      }
+
+      .gallery {
+        grid-template-columns: repeat(2, 1fr);
+        height: 280px;
+      }
+
+      .cta-banner__inner {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      .contact__form { padding: 24px; }
+
+      .tg-float { bottom: 20px; right: 16px; padding: 12px 18px; font-size: 14px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero__buttons { flex-direction: column; align-items: flex-start; }
+      .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+
+      .gallery {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+
+      .gallery__item { height: 180px; }
+
+      .tg-float span { display: none; }
+      .tg-float { padding: 14px; border-radius: 0; }
+
+      .footer__inner { flex-direction: column; align-items: flex-start; gap: 16px; }
+    }
+
+    /* ─── Reduced motion ───────────────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Navbar ──────────────────────────────────────────────────────── -->
+  <header class="navbar" role="banner">
+    <div class="container">
+      <nav class="navbar__inner" aria-label="Основна навігація">
+        <div class="navbar__logo">TURBO <span>STO</span></div>
+        <ul class="navbar__nav">
+          <li><a href="#services">Послуги</a></li>
+          <li><a href="#about">Про нас</a></li>
+          <li><a href="#hours">Графік</a></li>
+          <li><a href="#contact">Контакти</a></li>
+        </ul>
+        <a href="https://t.me/turbo_sto_kyiv" class="navbar__cta" target="_blank" rel="noopener">Записатись</a>
+      </nav>
+    </div>
+  </header>
+
+
+  <!-- ── Hero ────────────────────────────────────────────────────────── -->
+  <section class="hero" id="home" aria-label="Герой-блок">
+    <div class="hero__bg" aria-hidden="true">
+      <img
+        src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80"
+        alt="Механік працює в автосервісі"
+        loading="eager"
+      />
+    </div>
+    <div class="hero__overlay" aria-hidden="true"></div>
+    <div class="hero__accent" aria-hidden="true"></div>
+
+    <div class="container">
+      <div class="hero__content">
+        <div class="hero__tagline">Відкрито прямо зараз</div>
+
+        <h1 class="hero__title">
+          ТУРБО<br>
+          <span class="hero__title-line2">АВТОСЕРВІС</span>
+        </h1>
+
+        <p class="hero__desc">
+          Ремонт та технічне обслуговування автомобілів будь-яких марок. Досвідчені майстри, гарантія на роботи, чесні ціни.
+        </p>
+
+        <div class="hero__buttons">
+          <a href="https://t.me/turbo_sto_kyiv" class="btn-primary" target="_blank" rel="noopener" aria-label="Записатись онлайн через Telegram">
+            <!-- Telegram icon SVG -->
+            <svg class="tg-float__icon" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+              <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+            </svg>
+            Запишись онлайн
+          </a>
+          <a href="#services" class="btn-secondary">
+            Наші послуги
+          </a>
+        </div>
+
+        <div class="hero__stats" aria-label="Ключові показники">
+          <div>
+            <div class="hero__stat-num">10+</div>
+            <div class="hero__stat-label">Років досвіду</div>
+          </div>
+          <div>
+            <div class="hero__stat-num">5000+</div>
+            <div class="hero__stat-label">Задоволених клієнтів</div>
+          </div>
+          <div>
+            <div class="hero__stat-num">12 міс</div>
+            <div class="hero__stat-label">Гарантія на роботи</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── Services ────────────────────────────────────────────────────── -->
+  <section class="services" id="services" aria-labelledby="services-heading">
+    <div class="container">
+      <div class="services__header">
+        <span class="section-label">Що ми робимо</span>
+        <h2 id="services-heading">Наші послуги</h2>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="services__grid" role="list">
+
+        <article class="service-card" role="listitem">
+          <div class="service-card__icon" aria-hidden="true">🔧</div>
+          <h3 class="service-card__title">Діагностика</h3>
+          <p class="service-card__desc">Комп'ютерна діагностика двигуна, трансмісії та електроніки. Виявляємо несправності за 30 хвилин.</p>
+          <div class="service-card__price">
+            <span class="service-card__price-from">від</span>
+            <span class="service-card__price-val">300</span>
+            <span class="service-card__price-cur">грн</span>
+          </div>
+        </article>
+
+        <article class="service-card" role="listitem">
+          <div class="service-card__icon" aria-hidden="true">🛢️</div>
+          <h3 class="service-card__title">Заміна масла</h3>
+          <p class="service-card__desc">Заміна моторного масла та фільтра. Використовуємо тільки оригінальні витратні матеріали.</p>
+          <div class="service-card__price">
+            <span class="service-card__price-from">від</span>
+            <span class="service-card__price-val">400</span>
+            <span class="service-card__price-cur">грн</span>
+          </div>
+        </article>
+
+        <article class="service-card" role="listitem">
+          <div class="service-card__icon" aria-hidden="true">⚙️</div>
+          <h3 class="service-card__title">Технічне обслуговування</h3>
+          <p class="service-card__desc">Повне ТО за регламентом виробника. Перевірка всіх вузлів та заміна витратних матеріалів.</p>
+          <div class="service-card__price">
+            <span class="service-card__price-from">від</span>
+            <span class="service-card__price-val">800</span>
+            <span class="service-card__price-cur">грн</span>
+          </div>
+        </article>
+
+        <article class="service-card" role="listitem">
+          <div class="service-card__icon" aria-hidden="true">🔩</div>
+          <h3 class="service-card__title">Шиномонтаж</h3>
+          <p class="service-card__desc">Монтаж/демонтаж, балансування коліс. Зберігання шин. Швидко — черги немає.</p>
+          <div class="service-card__price">
+            <span class="service-card__price-from">від</span>
+            <span class="service-card__price-val">200</span>
+            <span class="service-card__price-cur">грн</span>
+          </div>
+        </article>
+
+        <article class="service-card" role="listitem">
+          <div class="service-card__icon" aria-hidden="true">🚗</div>
+          <h3 class="service-card__title">Кузовний ремонт</h3>
+          <p class="service-card__desc">Усунення вм'ятин, подряпин, рихтування та фарбування. Поліщуємо лак без сліду.</p>
+          <div class="service-card__price">
+            <span class="service-card__price-from">від</span>
+            <span class="service-card__price-val">2000</span>
+            <span class="service-card__price-cur">грн</span>
+          </div>
+        </article>
+
+        <article class="service-card" role="listitem">
+          <div class="service-card__icon" aria-hidden="true">✨</div>
+          <h3 class="service-card__title">Детейлінг</h3>
+          <p class="service-card__desc">Хімчистка салону, полірування кузова, захисне керамічне покриття. Авто — як нове.</p>
+          <div class="service-card__price">
+            <span class="service-card__price-from">від</span>
+            <span class="service-card__price-val">1500</span>
+            <span class="service-card__price-cur">грн</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" aria-hidden="true"></div>
+
+
+  <!-- ── Photo Gallery strip ─────────────────────────────────────────── -->
+  <div class="gallery" aria-label="Фотогалерея сервісу">
+    <div class="gallery__item">
+      <img
+        src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&q=75"
+        alt="Механік ремонтує двигун"
+        loading="lazy"
+      />
+    </div>
+    <div class="gallery__item">
+      <img
+        src="https://images.unsplash.com/photo-1615906655593-ad0386982a0f?w=600&q=75"
+        alt="Підіймач з автомобілем у сервісі"
+        loading="lazy"
+      />
+    </div>
+    <div class="gallery__item">
+      <img
+        src="https://images.unsplash.com/photo-1558618047-f4e60cdf4b43?w=600&q=75"
+        alt="Детейлінг — полірування автомобіля"
+        loading="lazy"
+      />
+    </div>
+    <div class="gallery__item">
+      <img
+        src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&q=75"
+        alt="Сучасний автомобіль"
+        loading="lazy"
+      />
+    </div>
+  </div>
+
+
+  <!-- ── Why Us ──────────────────────────────────────────────────────── -->
+  <section class="whyus" id="about" aria-labelledby="whyus-heading">
+    <div class="container">
+      <div class="whyus__inner">
+
+        <div class="whyus__img">
+          <img
+            src="https://images.unsplash.com/photo-1591293836027-e05b48473b67?w=800&q=80"
+            alt="Досвідчений механік за роботою"
+            loading="lazy"
+          />
+        </div>
+
+        <div class="whyus__text">
+          <span class="section-label">Чому обирають нас</span>
+          <h2 id="whyus-heading">Ми робимо правильно<br><span style="color: var(--orange)">з першого разу</span></h2>
+
+          <div class="whyus__list">
+
+            <div class="whyus__item">
+              <div class="whyus__item-icon" aria-hidden="true">⚡</div>
+              <div>
+                <div class="whyus__item-title">Швидко</div>
+                <p class="whyus__item-desc">ТО та дрібний ремонт — за 1–2 години. Без черг, бо ми цінуємо ваш час. Попереднє записування гарантує слот.</p>
+              </div>
+            </div>
+
+            <div class="whyus__item">
+              <div class="whyus__item-icon" aria-hidden="true">🛡️</div>
+              <div>
+                <div class="whyus__item-title">Гарантія 12 місяців</div>
+                <p class="whyus__item-desc">На всі роботи надаємо письмову гарантію 12 місяців. Якщо щось не так — усунемо безкоштовно.</p>
+              </div>
+            </div>
+
+            <div class="whyus__item">
+              <div class="whyus__item-icon" aria-hidden="true">🏆</div>
+              <div>
+                <div class="whyus__item-title">10 років досвіду</div>
+                <p class="whyus__item-desc">Команда сертифікованих майстрів з досвідом понад 10 років. Обслуговуємо авто всіх марок та моделей.</p>
+              </div>
+            </div>
+
+            <div class="whyus__item">
+              <div class="whyus__item-icon" aria-hidden="true">💰</div>
+              <div>
+                <div class="whyus__item-title">Чесна вартість</div>
+                <p class="whyus__item-desc">Узгоджуємо ціну до початку робіт. Жодних прихованих доплат. Повертаємо всі замінені деталі.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── CTA Banner ──────────────────────────────────────────────────── -->
+  <div class="cta-banner" aria-label="Заклик до дії">
+    <div class="container">
+      <div class="cta-banner__inner">
+        <div>
+          <h2 class="cta-banner__title">Запишись прямо зараз —<br>перша діагностика в подарунок!</h2>
+          <p class="cta-banner__sub">Звільни час — ми зателефонуємо та підтвердимо зручний час</p>
+        </div>
+        <a href="https://t.me/turbo_sto_kyiv" class="btn-dark" target="_blank" rel="noopener">
+          Написати в Telegram
+        </a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── Working Hours & Map ─────────────────────────────────────────── -->
+  <section class="hours-map" id="hours" aria-labelledby="hours-heading">
+    <div class="container">
+      <span class="section-label">Коли ми працюємо</span>
+      <div class="hours-map__inner">
+
+        <div>
+          <h2 class="hours__title" id="hours-heading">Графік роботи</h2>
+          <table class="hours__table" aria-label="Години роботи по днях тижня">
+            <tbody>
+              <tr>
+                <td>Понеділок</td>
+                <td>08:00 — 20:00</td>
+              </tr>
+              <tr>
+                <td>Вівторок</td>
+                <td>08:00 — 20:00</td>
+              </tr>
+              <tr>
+                <td>Середа</td>
+                <td>08:00 — 20:00</td>
+              </tr>
+              <tr>
+                <td>Четвер</td>
+                <td>08:00 — 20:00</td>
+              </tr>
+              <tr class="today">
+                <td>П'ятниця</td>
+                <td>08:00 — 20:00</td>
+              </tr>
+              <tr>
+                <td>Субота</td>
+                <td>09:00 — 18:00</td>
+              </tr>
+              <tr>
+                <td>Неділя</td>
+                <td>10:00 — 16:00</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="hours__badge">Відкрито зараз</div>
+        </div>
+
+        <div>
+          <div class="map__placeholder" role="img" aria-label="Карта розташування TURBO STO">
+            <div class="map__pin">
+              <div class="map__pin-icon" aria-hidden="true"><span>📍</span></div>
+              <div class="map__pin-label">TURBO STO</div>
+              <p class="map__pin-addr">вул. Автозаводська, 15<br>Київ, 02091</p>
+              <a
+                href="https://maps.google.com/?q=TURBO+STO"
+                class="map__btn"
+                target="_blank"
+                rel="noopener"
+                aria-label="Відкрити на Google Maps"
+              >Як доїхати</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── Contact ─────────────────────────────────────────────────────── -->
+  <section class="contact" id="contact" aria-labelledby="contact-heading">
+    <div class="container">
+      <div class="contact__inner">
+
+        <div class="contact__info">
+          <span class="section-label">Зв'яжіться з нами</span>
+          <h2 id="contact-heading">Контакти</h2>
+
+          <div class="contact__list">
+
+            <div class="contact__item">
+              <div class="contact__item-icon" aria-hidden="true">📞</div>
+              <div class="contact__item-text">
+                <strong>Телефон</strong>
+                <a href="tel:+380991234567" style="color: var(--gray);">+38 (099) 123-45-67</a>
+              </div>
+            </div>
+
+            <div class="contact__item">
+              <div class="contact__item-icon" aria-hidden="true">✉️</div>
+              <div class="contact__item-text">
+                <strong>Email</strong>
+                <a href="mailto:info@turbosto.ua" style="color: var(--gray);">info@turbosto.ua</a>
+              </div>
+            </div>
+
+            <div class="contact__item">
+              <div class="contact__item-icon" aria-hidden="true">📍</div>
+              <div class="contact__item-text">
+                <strong>Адреса</strong>
+                вул. Автозаводська, 15, Київ, 02091
+              </div>
+            </div>
+
+            <div class="contact__item">
+              <div class="contact__item-icon" aria-hidden="true">💬</div>
+              <div class="contact__item-text">
+                <strong>Telegram-бот</strong>
+                <a href="https://t.me/turbo_sto_kyiv" target="_blank" rel="noopener" style="color: #2AABEE;">@turbo_sto_kyiv — записатись онлайн</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="contact__form">
+          <h3>Залишити заявку</h3>
+
+          <!-- Note: pure HTML form, action can be pointed to a backend or Telegram webhook -->
+          <form action="https://t.me/turbo_sto_kyiv" method="get" target="_blank" aria-label="Форма запису на сервіс">
+
+            <div class="form-group">
+              <label for="name">Ваше ім'я</label>
+              <input type="text" id="name" name="name" placeholder="Іван Петренко" required autocomplete="name" />
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Номер телефону</label>
+              <input type="tel" id="phone" name="phone" placeholder="+38 (0__) ___-__-__" required autocomplete="tel" />
+            </div>
+
+            <div class="form-group">
+              <label for="service">Послуга</label>
+              <select id="service" name="service" required>
+                <option value="" disabled selected>Оберіть послугу</option>
+                <option value="diagnostics">Діагностика від 300 грн</option>
+                <option value="oil">Заміна масла від 400 грн</option>
+                <option value="to">Технічне обслуговування від 800 грн</option>
+                <option value="tires">Шиномонтаж від 200 грн</option>
+                <option value="body">Кузовний ремонт від 2000 грн</option>
+                <option value="detail">Детейлінг від 1500 грн</option>
+                <option value="other">Інше</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="comment">Коментар (необов'язково)</label>
+              <textarea id="comment" name="comment" placeholder="Опишіть проблему або побажання..."></textarea>
+            </div>
+
+            <button type="submit" class="form-submit">Надіслати заявку</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── Footer ──────────────────────────────────────────────────────── -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__logo">TURBO <span>STO</span></div>
+        <ul class="footer__nav" aria-label="Посилання у підвалі">
+          <li><a href="#services">Послуги</a></li>
+          <li><a href="#about">Про нас</a></li>
+          <li><a href="#hours">Графік</a></li>
+          <li><a href="#contact">Контакти</a></li>
+          <li><a href="https://t.me/turbo_sto_kyiv" target="_blank" rel="noopener">Telegram</a></li>
+        </ul>
+      </div>
+      <p class="footer__copy">© 2026 TURBO STO — Усі права захищені. Зроблено з ❤️ в Україні</p>
+    </div>
+  </footer>
+
+
+  <!-- ── Floating Telegram Button ────────────────────────────────────── -->
+  <a
+    href="https://t.me/turbo_sto_kyiv"
+    class="tg-float"
+    target="_blank"
+    rel="noopener"
+    aria-label="Записатись через Telegram"
+  >
+    <svg class="tg-float__icon" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+      <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+    </svg>
+    <span>Записатись</span>
+  </a>
+
+</body>
+</html>
