@@ -152,11 +152,21 @@
       z-index: 0;
     }
 
-    .hero__bg img {
+    .hero__bg img,
+    .hero__bg video {
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center;
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
     }
 
     .hero__overlay {
@@ -472,6 +482,59 @@
       line-height: 1.6;
     }
 
+    /* ─── Reviews ──────────────────────────────────────────────────── */
+    .reviews { background: var(--bg3); }
+
+    .reviews__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .review-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .review-card__stars {
+      color: var(--orange);
+      font-size: 15px;
+      letter-spacing: 2px;
+    }
+
+    .review-card__text {
+      font-size: 14px;
+      color: var(--gray);
+      line-height: 1.7;
+      flex-grow: 1;
+    }
+
+    .review-card__author {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+
+    .review-card__name {
+      font-family: var(--font-head);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .review-card__car {
+      font-size: 12.5px;
+      color: var(--gray2);
+    }
+
     /* ─── Gallery strip ────────────────────────────────────────────── */
     .gallery {
       display: grid;
@@ -581,6 +644,15 @@
       justify-content: center;
       gap: 12px;
       overflow: hidden;
+    }
+
+    .map__frame {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      filter: grayscale(30%) brightness(0.85) contrast(1.05);
     }
 
     /* fake map grid */
@@ -930,6 +1002,10 @@
         gap: 40px;
       }
 
+      .reviews__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
       .whyus__img img { height: 340px; }
 
       .hours-map__inner { grid-template-columns: 1fr; }
@@ -950,6 +1026,10 @@
       .services__grid {
         grid-template-columns: 1fr;
         gap: 1px;
+      }
+
+      .reviews__grid {
+        grid-template-columns: 1fr;
       }
 
       .gallery {
@@ -1017,6 +1097,7 @@
         <ul class="navbar__nav">
           <li><a href="#services">Послуги</a></li>
           <li><a href="#about">Про нас</a></li>
+          <li><a href="#reviews">Відгуки</a></li>
           <li><a href="#hours">Графік</a></li>
           <li><a href="#contact">Контакти</a></li>
         </ul>
@@ -1029,11 +1110,17 @@
   <!-- ── Hero ────────────────────────────────────────────────────────── -->
   <section class="hero" id="home" aria-label="Герой-блок">
     <div class="hero__bg" aria-hidden="true">
-      <img
-        src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80"
-        alt="Механік працює в автосервісі"
-        loading="eager"
-      />
+      <video
+        class="hero-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        poster="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80"
+      >
+        <source src="https://videos.pexels.com/video-files/8986482/8986482-hd_1280_720_30fps.mp4" type="video/mp4">
+      </video>
     </div>
     <div class="hero__overlay" aria-hidden="true"></div>
     <div class="hero__accent" aria-hidden="true"></div>
@@ -1043,8 +1130,8 @@
         <div class="hero__tagline">Відкрито прямо зараз</div>
 
         <h1 class="hero__title">
-          ТУРБО<br>
-          <span class="hero__title-line2">АВТОСЕРВІС</span>
+          ЧЕСНА ДІАГНОСТИКА.<br>
+          <span class="hero__title-line2">БЕЗ ПРИДУМАНИХ ПОЛОМОК</span>
         </h1>
 
         <p class="hero__desc">
@@ -1186,7 +1273,7 @@
     </div>
     <div class="gallery__item">
       <img
-        src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&q=75"
+        src="https://images.unsplash.com/photo-1632823469850-2f77dd9c7f93?w=600&q=75"
         alt="Детейлінг — полірування автомобіля"
         loading="lazy"
       />
@@ -1275,6 +1362,64 @@
   </div>
 
 
+  <!-- ── Reviews ─────────────────────────────────────────────────────── -->
+  <section class="reviews" id="reviews" aria-labelledby="reviews-heading">
+    <div class="container">
+      <div class="services__header">
+        <span class="section-label">Відгуки клієнтів</span>
+        <h2 id="reviews-heading">Нам довіряють,<br>бо ми не вигадуємо поломки</h2>
+      </div>
+
+      <div class="reviews__grid">
+        <div class="review-card">
+          <div class="review-card__stars" aria-label="Оцінка 5 з 5">★★★★★</div>
+          <p class="review-card__text">"Приїхав на діагностику підвіски — думав, доведеться міняти пів машини. Хлопці чесно сказали, що потрібна лише заміна двох втулок. Жодних вигаданих поломок, ціна узгоджена заздалегідь."</p>
+          <div class="review-card__author">
+            <div class="review-card__name">Олександр К.</div>
+            <div class="review-card__car">Volkswagen Passat B7</div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-card__stars" aria-label="Оцінка 5 з 5">★★★★★</div>
+          <p class="review-card__text">"Порівняв ціну з трьома іншими СТО — тут вийшло чесніше і навіть дешевше, бо не накидали зайвих робіт «про всяк випадок». Полагодили за день, дали гарантію на 12 місяців."</p>
+          <div class="review-card__author">
+            <div class="review-card__name">Марина Т.</div>
+            <div class="review-card__car">Toyota RAV4</div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-card__stars" aria-label="Оцінка 5 з 5">★★★★★</div>
+          <p class="review-card__text">"Показали на екрані під час діагностики, що саме не так — жодних «на слово повірте». Замінили лише те, що дійсно вийшло з ладу. Тепер їжджу тільки сюди."</p>
+          <div class="review-card__author">
+            <div class="review-card__name">Дмитро С.</div>
+            <div class="review-card__car">Skoda Octavia A7</div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-card__stars" aria-label="Оцінка 5 з 5">★★★★★</div>
+          <p class="review-card__text">"Після детейлінгу авто виглядає як нове. Майстер порадив не робити повне полірування, бо кузов у гарному стані — зекономив мені гроші замість того, щоб продати зайву послугу."</p>
+          <div class="review-card__author">
+            <div class="review-card__name">Ірина В.</div>
+            <div class="review-card__car">Hyundai Tucson</div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-card__stars" aria-label="Оцінка 5 з 5">★★★★★</div>
+          <p class="review-card__text">"Прийшов з підозрою на проблему з коробкою передач — виявилось, треба лише оновити масло. Могли б розвести на дорогий ремонт, але сказали правду. Це і є головна причина, чому я тут залишаюсь."</p>
+          <div class="review-card__author">
+            <div class="review-card__name">Андрій П.</div>
+            <div class="review-card__car">Ford Focus III</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
   <!-- ── Working Hours & Map ─────────────────────────────────────────── -->
   <section class="hours-map" id="hours" aria-labelledby="hours-heading">
     <div class="container">
@@ -1320,16 +1465,22 @@
 
         <div>
           <div class="map__placeholder" role="img" aria-label="Карта розташування TURBO STO">
+            <iframe
+              class="map__frame"
+              src="https://www.google.com/maps?q=%D0%B2%D1%83%D0%BB.%20%D0%90%D0%B2%D1%82%D0%BE%D0%B7%D0%B0%D0%B2%D0%BE%D0%B4%D1%81%D1%8C%D0%BA%D0%B0%2015%2C%20%D0%9A%D0%B8%D1%97%D0%B2&output=embed"
+              loading="lazy"
+              title="Карта розташування TURBO STO"
+            ></iframe>
             <div class="map__pin">
               <div class="map__pin-icon" aria-hidden="true"><span>📍</span></div>
               <div class="map__pin-label">TURBO STO</div>
               <p class="map__pin-addr">вул. Автозаводська, 15<br>Київ, 02091</p>
               <a
-                href="https://maps.google.com/?q=TURBO+STO"
+                href="https://www.google.com/maps/dir/?api=1&destination=%D0%B2%D1%83%D0%BB.%20%D0%90%D0%B2%D1%82%D0%BE%D0%B7%D0%B0%D0%B2%D0%BE%D0%B4%D1%81%D1%8C%D0%BA%D0%B0%2015%2C%20%D0%9A%D0%B8%D1%97%D0%B2"
                 class="map__btn"
                 target="_blank"
                 rel="noopener"
-                aria-label="Відкрити на Google Maps"
+                aria-label="Прокласти маршрут у Google Maps"
               >Як доїхати</a>
             </div>
           </div>
