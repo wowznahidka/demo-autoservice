@@ -535,6 +535,135 @@
       color: var(--gray2);
     }
 
+    /* ─── Service card photo ──────────────────────────────────────── */
+    .service-card__photo {
+      height: 180px;
+      margin: -36px -28px 28px;
+      position: relative;
+      overflow: hidden;
+      background-size: cover;
+      background-position: center;
+    }
+    .service-card__photo::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      inset-inline: 0;
+      height: 80px;
+      background: linear-gradient(to top, var(--bg), transparent);
+    }
+    .service-card:hover .service-card__photo { filter: brightness(1.1); }
+
+    /* ─── Car brands marquee ───────────────────────────────────────── */
+    .brands-bar {
+      background: var(--bg3);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 24px 0;
+      overflow: hidden;
+    }
+    .brands-track {
+      display: flex;
+      gap: 56px;
+      animation: marquee-brands 24s linear infinite;
+      white-space: nowrap;
+    }
+    .brands-track:hover { animation-play-state: paused; }
+    @keyframes marquee-brands {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    .brand-item {
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gray2);
+      transition: color .2s;
+      flex-shrink: 0;
+    }
+    .brand-item:hover { color: var(--orange); }
+    .brand-dot {
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      background: var(--orange);
+      border-radius: 50%;
+      margin: 0 28px;
+      vertical-align: middle;
+    }
+
+    /* ─── Detailing packages ───────────────────────────────────────── */
+    .packages { background: var(--bg3); }
+    .packages__header { text-align: center; margin-bottom: 52px; }
+    .packages__header h2 { font-size: clamp(28px,4vw,42px); font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+    .packages__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .pkg-card {
+      border: 1px solid var(--border);
+      padding: 40px 32px;
+      position: relative;
+      transition: border-color .2s, transform .2s;
+    }
+    .pkg-card:hover { border-color: var(--orange); transform: translateY(-4px); }
+    .pkg-card.featured {
+      border-color: var(--orange);
+      background: rgba(249,115,22,.04);
+    }
+    .pkg-badge {
+      position: absolute;
+      top: -12px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--orange);
+      color: #0d1520;
+      font-family: var(--font-head);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      padding: 4px 16px;
+    }
+    .pkg-name {
+      font-family: var(--font-head);
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .pkg-sub { font-size: 13px; color: var(--gray); margin-bottom: 28px; }
+    .pkg-price {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 28px;
+    }
+    .pkg-price-from { font-size: 12px; color: var(--gray2); text-transform: uppercase; }
+    .pkg-price-val { font-family: var(--font-head); font-size: 40px; font-weight: 800; color: var(--orange); }
+    .pkg-price-cur { font-size: 16px; color: var(--gray); }
+    .pkg-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+    .pkg-features li { font-size: 14px; color: var(--gray); display: flex; gap: 10px; align-items: flex-start; }
+    .pkg-features li::before { content: '✓'; color: var(--orange); font-weight: 700; flex-shrink: 0; }
+    .pkg-btn {
+      display: block;
+      text-align: center;
+      padding: 14px;
+      border: 1px solid var(--orange);
+      font-family: var(--font-head);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--orange);
+      text-decoration: none;
+      transition: background .2s, color .2s;
+    }
+    .pkg-btn:hover, .pkg-card.featured .pkg-btn { background: var(--orange); color: #0d1520; }
+
     /* ─── Gallery strip ────────────────────────────────────────────── */
     .gallery {
       display: grid;
@@ -1032,6 +1161,11 @@
         grid-template-columns: 1fr;
       }
 
+      .packages__grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
       .gallery {
         grid-template-columns: repeat(2, 1fr);
         height: 280px;
@@ -1183,6 +1317,7 @@
       <div class="services__grid" role="list">
 
         <article class="service-card" role="listitem">
+          <div class="service-card__photo" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=75&auto=format&fit=crop')"></div>
           <div class="service-card__icon" aria-hidden="true">🔧</div>
           <h3 class="service-card__title">Діагностика</h3>
           <p class="service-card__desc">Комп'ютерна діагностика двигуна, трансмісії та електроніки. Виявляємо несправності за 30 хвилин.</p>
@@ -1194,6 +1329,7 @@
         </article>
 
         <article class="service-card" role="listitem">
+          <div class="service-card__photo" style="background-image:url('https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&q=75&auto=format&fit=crop')"></div>
           <div class="service-card__icon" aria-hidden="true">🛢️</div>
           <h3 class="service-card__title">Заміна масла</h3>
           <p class="service-card__desc">Заміна моторного масла та фільтра. Використовуємо тільки оригінальні витратні матеріали.</p>
@@ -1205,6 +1341,7 @@
         </article>
 
         <article class="service-card" role="listitem">
+          <div class="service-card__photo" style="background-image:url('https://images.unsplash.com/photo-1615906655593-ad0386982a0f?w=600&q=75&auto=format&fit=crop')"></div>
           <div class="service-card__icon" aria-hidden="true">⚙️</div>
           <h3 class="service-card__title">Технічне обслуговування</h3>
           <p class="service-card__desc">Повне ТО за регламентом виробника. Перевірка всіх вузлів та заміна витратних матеріалів.</p>
@@ -1216,6 +1353,7 @@
         </article>
 
         <article class="service-card" role="listitem">
+          <div class="service-card__photo" style="background-image:url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&q=75&auto=format&fit=crop')"></div>
           <div class="service-card__icon" aria-hidden="true">🔩</div>
           <h3 class="service-card__title">Шиномонтаж</h3>
           <p class="service-card__desc">Монтаж/демонтаж, балансування коліс. Зберігання шин. Швидко — черги немає.</p>
@@ -1227,6 +1365,7 @@
         </article>
 
         <article class="service-card" role="listitem">
+          <div class="service-card__photo" style="background-image:url('https://images.unsplash.com/photo-1591293836027-e05b48473b67?w=600&q=75&auto=format&fit=crop')"></div>
           <div class="service-card__icon" aria-hidden="true">🚗</div>
           <h3 class="service-card__title">Кузовний ремонт</h3>
           <p class="service-card__desc">Усунення вм'ятин, подряпин, рихтування та фарбування. Поліщуємо лак без сліду.</p>
@@ -1238,6 +1377,7 @@
         </article>
 
         <article class="service-card" role="listitem">
+          <div class="service-card__photo" style="background-image:url('https://images.unsplash.com/photo-1601362840469-51e4d8d58785?w=600&q=75&auto=format&fit=crop')"></div>
           <div class="service-card__icon" aria-hidden="true">✨</div>
           <h3 class="service-card__title">Детейлінг</h3>
           <p class="service-card__desc">Хімчистка салону, полірування кузова, захисне керамічне покриття. Авто — як нове.</p>
@@ -1254,6 +1394,103 @@
 
   <div class="divider" aria-hidden="true"></div>
 
+
+  <!-- ── Car brands ───────────────────────────────────────────────────── -->
+  <div class="brands-bar" aria-hidden="true">
+    <div class="brands-track">
+      <span class="brand-item">BMW</span><span class="brand-dot"></span>
+      <span class="brand-item">MERCEDES-BENZ</span><span class="brand-dot"></span>
+      <span class="brand-item">AUDI</span><span class="brand-dot"></span>
+      <span class="brand-item">VOLKSWAGEN</span><span class="brand-dot"></span>
+      <span class="brand-item">TOYOTA</span><span class="brand-dot"></span>
+      <span class="brand-item">HONDA</span><span class="brand-dot"></span>
+      <span class="brand-item">FORD</span><span class="brand-dot"></span>
+      <span class="brand-item">HYUNDAI</span><span class="brand-dot"></span>
+      <span class="brand-item">KIA</span><span class="brand-dot"></span>
+      <span class="brand-item">SKODA</span><span class="brand-dot"></span>
+      <span class="brand-item">RENAULT</span><span class="brand-dot"></span>
+      <span class="brand-item">OPEL</span><span class="brand-dot"></span>
+      <!-- duplicate for seamless loop -->
+      <span class="brand-item">BMW</span><span class="brand-dot"></span>
+      <span class="brand-item">MERCEDES-BENZ</span><span class="brand-dot"></span>
+      <span class="brand-item">AUDI</span><span class="brand-dot"></span>
+      <span class="brand-item">VOLKSWAGEN</span><span class="brand-dot"></span>
+      <span class="brand-item">TOYOTA</span><span class="brand-dot"></span>
+      <span class="brand-item">HONDA</span><span class="brand-dot"></span>
+      <span class="brand-item">FORD</span><span class="brand-dot"></span>
+      <span class="brand-item">HYUNDAI</span><span class="brand-dot"></span>
+      <span class="brand-item">KIA</span><span class="brand-dot"></span>
+      <span class="brand-item">SKODA</span><span class="brand-dot"></span>
+      <span class="brand-item">RENAULT</span><span class="brand-dot"></span>
+      <span class="brand-item">OPEL</span><span class="brand-dot"></span>
+    </div>
+  </div>
+
+  <!-- ── Detailing Packages ────────────────────────────────────────────── -->
+  <section class="packages" style="padding:100px 0">
+    <div class="container">
+      <div class="packages__header">
+        <span class="section-label">Детейлінг</span>
+        <h2>Оберіть свій пакет</h2>
+        <p style="color:var(--gray);font-size:15px;margin-top:12px;max-width:500px;margin-left:auto;margin-right:auto">Від базового догляду до преміум-захисту. Ваше авто заслуговує найкращого.</p>
+      </div>
+      <div class="packages__grid">
+        <div class="pkg-card">
+          <div class="pkg-name">Базовий</div>
+          <div class="pkg-sub">Зовнішній догляд</div>
+          <div class="pkg-price">
+            <span class="pkg-price-from">від</span>
+            <span class="pkg-price-val">1 500</span>
+            <span class="pkg-price-cur">грн</span>
+          </div>
+          <ul class="pkg-features">
+            <li>Хімчистка кузова</li>
+            <li>Полірування фар</li>
+            <li>Чорніння гуми та пластику</li>
+            <li>Ручна мийка та сушка</li>
+          </ul>
+          <a href="https://telegram.me/znahidkawow" class="pkg-btn">Обрати</a>
+        </div>
+
+        <div class="pkg-card featured">
+          <div class="pkg-badge">Хіт</div>
+          <div class="pkg-name">Преміум</div>
+          <div class="pkg-sub">Повний комплекс</div>
+          <div class="pkg-price">
+            <span class="pkg-price-from">від</span>
+            <span class="pkg-price-val">3 500</span>
+            <span class="pkg-price-cur">грн</span>
+          </div>
+          <ul class="pkg-features">
+            <li>Все з базового пакету</li>
+            <li>Хімчистка салону (сидіння, килимки)</li>
+            <li>Полірування кузова (1 шар)</li>
+            <li>Обробка шкіри та пластику в салоні</li>
+            <li>Озонування салону</li>
+          </ul>
+          <a href="https://telegram.me/znahidkawow" class="pkg-btn">Обрати</a>
+        </div>
+
+        <div class="pkg-card">
+          <div class="pkg-name">Elite</div>
+          <div class="pkg-sub">Керамічний захист</div>
+          <div class="pkg-price">
+            <span class="pkg-price-from">від</span>
+            <span class="pkg-price-val">8 000</span>
+            <span class="pkg-price-cur">грн</span>
+          </div>
+          <ul class="pkg-features">
+            <li>Все з Преміум пакету</li>
+            <li>Нанесення керамічного покриття</li>
+            <li>Захист скла нанополімером</li>
+            <li>Гарантія захисту 2 роки</li>
+            <li>Детальний звіт та фото</li>
+          </ul>
+          <a href="https://telegram.me/znahidkawow" class="pkg-btn">Обрати</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- ── Photo Gallery strip ─────────────────────────────────────────── -->
   <div class="gallery" aria-label="Фотогалерея сервісу">
