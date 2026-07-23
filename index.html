@@ -1207,7 +1207,18 @@
         transition-duration: 0.01ms !important;
       }
     }
-  </style>
+  
+    /* ── mobile burger ── */
+    .nav-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;margin-left:auto;z-index:200}
+    .nav-burger span{display:block;width:22px;height:2px;background:#fff;border-radius:1px;transition:all .3s}
+    @media(max-width:767px){.nav-burger{display:flex}}
+    .nav-fly{display:none;position:fixed;inset:0;background:#111827;z-index:9999;flex-direction:column;align-items:center;justify-content:center;gap:2rem}
+    .nav-fly.open{display:flex}
+    .nav-fly a:not(.fly-cta){font-size:1.7rem;font-weight:600;color:#fff;text-decoration:none;transition:opacity .2s}
+    .nav-fly a:not(.fly-cta):hover{opacity:.7}
+    .fly-cta{margin-top:.8rem;padding:14px 36px;background:#f97316;color:#fff;border-radius:8px;font-size:1rem;font-weight:700;text-decoration:none}
+    .nav-fly-close{position:absolute;top:20px;right:24px;font-size:30px;color:#aaa;background:none;border:none;cursor:pointer;line-height:1}
+    </style>
 <meta property="og:type" content="website">
 <meta property="og:title" content="TURBO STO — Автосервіс та детейлінг | Запис онлайн">
 <meta property="og:description" content="Діагностика, ТО, кузовний ремонт, детейлінг. Записатись в Telegram — відповідаємо за 15 хв.">
@@ -1236,10 +1247,23 @@
           <li><a href="#hours">Графік</a></li>
           <li><a href="#contact">Контакти</a></li>
         </ul>
+      <button class="nav-burger" aria-label="Відкрити меню" id="nav-burger-btn"><span></span><span></span><span></span></button>
         <a href="https://telegram.me/znahidkawow" class="navbar__cta" target="_blank" rel="noopener">Записатись</a>
       </nav>
     </div>
   </header>
+
+  <div class="nav-fly" id="nav-fly" role="dialog" aria-modal="true" aria-label="Мобільне меню">
+    <button class="nav-fly-close" id="nav-fly-close" aria-label="Закрити меню">&#215;</button>
+    <a href="#services">Послуги</a>
+    <a href="#about">Про нас</a>
+    <a href="#reviews">Відгуки</a>
+    <a href="#faq">FAQ</a>
+    <a href="#hours">Графік</a>
+    <a href="#contact">Контакти</a>
+    <a href="https://telegram.me/znahidkawow" class="fly-cta" target="_blank" rel="noopener">Записатись</a>
+  </div>
+
 
 
   <!-- ── Hero ────────────────────────────────────────────────────────── -->
@@ -2182,5 +2206,15 @@ fbq('trackCustom', 'DemoView', {demo: 'autoservice'});
 </script>
 <!-- /wow-demo-pixel -->
 
+  <script>
+  (function(){{
+    var btn=document.getElementById('nav-burger-btn'),fly=document.getElementById('nav-fly'),cls=document.getElementById('nav-fly-close');
+    function open(){{fly.classList.add('open');document.body.style.overflow='hidden'}}
+    function close(){{fly.classList.remove('open');document.body.style.overflow=''}}
+    if(btn)btn.addEventListener('click',open);
+    if(cls)cls.addEventListener('click',close);
+    fly&&fly.querySelectorAll('a').forEach(function(a){{a.addEventListener('click',close)}});
+  }})();
+  </script>
 </body>
 </html>
